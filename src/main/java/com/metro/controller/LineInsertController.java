@@ -3,6 +3,7 @@ package com.metro.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.metro.param.line.LineInsert;
+import com.metro.param.lineInsert.LineInsertSearchParam;
 import com.metro.pojo.FrankResult;
 import com.metro.pojo.LineStartAndEnd;
 import com.metro.service.LineInsertService;
@@ -25,13 +26,13 @@ public class LineInsertController {
     LineInsertService lineInsertService;
 
     @PostMapping("/findStartAndEnd")
-    public FrankResult<LineStartAndEnd> findStartAndEndStation(@RequestParam String lineName) {
-        return FrankResult.success(lineInsertService.getStartEnd(lineName));
+    public FrankResult<LineStartAndEnd> findStartAndEndStation(@RequestBody LineInsertSearchParam param) {
+        return FrankResult.success(lineInsertService.getStartEnd(param.getLineName()));
     }
 
     @PostMapping("/findLength")
-    public FrankResult<Integer> findLength(@RequestParam String lineName) {
-        return FrankResult.success(lineInsertService.getLength(lineName));
+    public FrankResult<Integer> findLength(@RequestBody LineInsertSearchParam param) {
+        return FrankResult.success(lineInsertService.getLength(param.getLineName()));
     }
 
     @PostMapping("/listAll")
@@ -40,7 +41,7 @@ public class LineInsertController {
     }
 
     @PostMapping("/listOne")
-    public FrankResult<LineInsert> listOne(@RequestParam String lineName) {
-        return FrankResult.success(lineInsertService.selectLineInsert(lineName));
+    public FrankResult<LineInsert> listOne(@RequestBody LineInsertSearchParam param) {
+        return FrankResult.success(lineInsertService.selectLineInsert(param.getLineName()));
     }
 }

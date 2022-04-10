@@ -35,10 +35,10 @@ public class LineAddParam {
      */
     private String color;
 
-    /**
-     * 线路中的站点信息
-     */
-    private List<String> station;
+//    /**
+//     * 线路中的站点信息
+//     */
+//    private List<String> station;
 
     /**
      * 起始时间

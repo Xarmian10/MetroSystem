@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @Version 1.0
  * @Author:XARMIAN
@@ -46,6 +48,11 @@ public class LineController {
     @RequestMapping(value = "/page",produces="application/json;charset=UTF-8")
     public FrankResult<FrankPageAble<Line>> pageLine(@RequestBody LinePageParam param) {
         return lineService.pageLine(param);
+    }
+
+    @PostMapping("/getName")
+    public FrankResult<List<String>> getLineName() {
+        return FrankResult.success(lineService.getLineName());
     }
 
 

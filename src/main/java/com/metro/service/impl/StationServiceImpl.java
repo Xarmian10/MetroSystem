@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.metro.mapper.StationMapper;
-import com.metro.param.station.StationAddParam;
-import com.metro.param.station.StationDeleteParam;
-import com.metro.param.station.StationPageParam;
-import com.metro.param.station.StationUpdateParam;
+import com.metro.param.station.*;
 import com.metro.pojo.FrankResult;
 import com.metro.pojo.Station;
 import com.metro.pojo.frank.FrankPageAble;
@@ -19,6 +16,7 @@ import com.metro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -129,6 +127,24 @@ public class StationServiceImpl extends ServiceImpl<StationMapper, Station> impl
             log.error("该站点非换乘站，无法设置换乘阻抗系数!");
             return FrankResult.fail("200", "该站点非换乘站，无法设置换乘阻抗系数");
         }
+    }
+
+    @Override
+    public FrankResult<List<String>> exchangeLine(StationExchangeLineParam param) {
+        List<Station> list = this.baseMapper.selectList(new LambdaQueryWrapper<Station>().eq(Station::getName, param.getStationName()));
+        //判断该站点时候只在一条线路上出现
+        if (list.size() > 1) {
+            List<String> lineList = new ArrayList<>();
+            for (Station station : list) {
+                //如果查找到的线路名和当前的线路名不相同，则加入list
+                if (!station.getLine().equals(param.getLineName())) {
+                    lineList.add(station.getLine());
+                }
+            }
+            return FrankResult.success(lineList);
+        }
+        log.error("该站点非换乘站");
+        return FrankResult.success(null);
     }
 
 //    @Override

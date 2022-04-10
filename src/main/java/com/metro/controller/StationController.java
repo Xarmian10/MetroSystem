@@ -2,10 +2,7 @@ package com.metro.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.metro.param.station.StationAddParam;
-import com.metro.param.station.StationDeleteParam;
-import com.metro.param.station.StationPageParam;
-import com.metro.param.station.StationUpdateParam;
+import com.metro.param.station.*;
 import com.metro.pojo.FrankResult;
 import com.metro.pojo.Station;
 import com.metro.pojo.frank.FrankPageAble;
@@ -14,10 +11,9 @@ import com.metro.util.BeanCopyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Version 1.0
@@ -61,7 +57,11 @@ public class StationController {
         return FrankResult.success(true);
     }
 
-
+    //获取站点的其他线路
+    @PostMapping("/exchangeLine")
+    public FrankResult<List<String>> getExchangeLine(@RequestBody StationExchangeLineParam param) {
+        return stationService.exchangeLine(param);
+    }
 
 
 }

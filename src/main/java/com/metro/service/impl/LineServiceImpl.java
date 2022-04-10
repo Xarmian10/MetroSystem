@@ -18,6 +18,9 @@ import com.metro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Version 1.0
  * @Author:XARMIAN
@@ -106,6 +109,20 @@ public class LineServiceImpl extends ServiceImpl<LineMapper, Line> implements Li
             result = this.getBaseMapper().selectPage(page, new LambdaQueryWrapper<Line>().eq(Line::getCity, param.getCity()));
         }
         return FrankResult.success(new FrankPageAble<>(result.getRecords(), new FrankPageInfo(param.getCurrentPage(), param.getRowsOfPage()), result.getTotal()));
+    }
+
+    /**
+     * @return
+     * 获取所有线路的名称
+     */
+    @Override
+    public List<String> getLineName() {
+        List<Line> lineList = this.getBaseMapper().selectList(null);
+        List<String> lineNameList = new ArrayList<>();
+        for (Line line : lineList) {
+            lineNameList.add(line.getName());
+        }
+        return lineNameList;
     }
 
 //    /**

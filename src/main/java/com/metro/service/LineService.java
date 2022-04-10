@@ -6,6 +6,8 @@ import com.metro.pojo.FrankResult;
 import com.metro.pojo.Line;
 import com.metro.pojo.frank.FrankPageAble;
 
+import java.util.List;
+
 /**
  * @Version 1.0
  * @Author:XARMIAN
@@ -21,5 +23,7 @@ public interface LineService extends IService<Line> {
     Boolean updateLine(LineUpdateParam param);
 
     FrankResult<FrankPageAble<Line>> pageLine(LinePageParam param);
+
+    List<String> getLineName();
 
 }
